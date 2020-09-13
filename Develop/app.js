@@ -14,6 +14,156 @@ const render = require("./lib/htmlRenderer");
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
+const managerQuestions = [
+    {
+        type: "input",
+        message: "What is your manager's name?",
+        name: "name"
+    },
+    {
+        type: "input",
+        message: "What is your manager's ID Number?",
+        name: "id"
+    },
+    {
+        type: "input",
+        message: "What is your manager's email address?",
+        name: "email"
+    },
+    {
+        type: "input",
+        message: "What is your manager's office number?",
+        name: "officeNumber"
+    },
+    {
+        type: "list",
+        message: "What type of team member would you like to add next?",
+        name: "nextMember",
+        choices: [
+            "Engineer",
+            "Intern",
+            "I'm done adding team members."
+        ]
+    }
+]
+
+const engineerQuestions = [
+    {
+        type: "input",
+        message: "What is this engineer's name?",
+        name: "name"
+    },
+    {
+        type: "input",
+        message: "What is this engineer's ID Number?",
+        name: "id"
+    },
+    {
+        type: "input",
+        message: "What is this engineer's email address?",
+        name: "email"
+    },
+    {
+        type: "input",
+        message: "What is this engineer's github username?",
+        name: "github"
+    },
+    {
+        type: "list",
+        message: "What type of team member would you like to add next?",
+        name: "nextMember",
+        choices: [
+            "Engineer",
+            "Intern",
+            "I'm done adding team members."
+        ]
+    }
+]
+
+const internQuestions = [
+    {
+        type: "input",
+        message: "What is this intern's name?",
+        name: "name"
+    },
+    {
+        type: "input",
+        message: "What is this intern's ID Number?",
+        name: "id"
+    },
+    {
+        type: "input",
+        message: "What is this intern's email address?",
+        name: "email"
+    },
+    {
+        type: "input",
+        message: "Where did this intern go to school?",
+        name: "school"
+    },
+    {
+        type: "list",
+        message: "What type of team member would you like to add next?",
+        name: "nextMember",
+        choices: [
+            "Engineer",
+            "Intern",
+            "I'm done adding team members."
+        ]
+    }
+]
+
+const employees = []
+
+inquirer.prompt(managerQuestions).then(function(data){
+    const manager = new Manager(data.name, data.id, data.email, data.officeNumber)
+    employees.push(manager)
+    if (data.nextMember === "Engineer"){
+        engineerInquire()
+    } else if (data.nextMember === "Intern"){
+        internInquire()
+    } else{writeFile()}
+})
+
+function engineerInquire(){
+    inquirer.prompt(engineerQuestions).then(function(data){
+        const engineer = new Engineer(data.name, data.id, data.email, data.github)
+        employees.push(engineer)
+        if (data.nextMember === "Engineer"){
+            engineerInquire()
+        } else if (data.nextMember === "Intern"){
+            internInquire()
+        } else{writeFile()}
+    })
+}
+
+function internInquire(){
+    inquirer.prompt(internQuestions).then(function(data){
+        const intern = new Intern(data.name, data.id, data.email, data.school)
+        employees.push(intern)
+        if (data.nextMember === "Engineer"){
+            engineerInquire()
+        } else if (data.nextMember === "Intern"){
+            internInquire()
+        } else{writeFile()}
+    })
+}
+
+function writeFile(){
+    fs.writeFile(outputPath, render(employees), function(err) {
+
+        if (err) {
+            return console.log(err);
+        }
+    
+        console.log("Success!");
+    
+    });
+}
+
+
+
+
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
