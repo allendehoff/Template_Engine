@@ -1,0 +1,58 @@
+.jumbotron {
+    background-color: #136f63;
+    
+}
+body {
+    background-color: #EEF1EF;
+}
+
+.team-area{
+    flex-wrap: wrap;
+}
+
+h1 {
+    color: #dc851f;
+    font-family: 'Monofett', cursive;
+    font-size: 8rem;
+    font-weight: lighter;
+}
+
+h2 {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 2.5rem;
+}
+
+li {
+    font-family: 'Source Code Pro', monospace;
+}
+
+.employee-card {
+    margin: .5rem 1rem 0 1rem;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.card-header {
+    background-color: #283044;
+    color: #D1D1D1;
+}
+
+h3 {
+    color: springgreen;
+}
+
+.card-body {
+    background-color: #7bb2d9;
+}
+
+@media (max-width: 991.98px) {
+    .card {
+        min-width: 40%;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .card {
+        min-width: 90%;
+    }
+}
